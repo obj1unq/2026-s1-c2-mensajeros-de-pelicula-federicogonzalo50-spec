@@ -7,7 +7,7 @@ object jeanGrey{
 
     method puedeLlamar() = puedeLlamar
 
-    method pesoRepartidor() = pesoRepartidor 
+    method peso() = pesoRepartidor 
 
 }
 object neo{
@@ -18,7 +18,7 @@ object neo{
 
     method puedeLlamar() = puedeLlamar
 
-    method pesoRepartidor() = pesoRepartidor  
+    method peso() = pesoRepartidor  
 
     method tieneCredito() {
       puedeLlamar = true
@@ -34,15 +34,17 @@ object saraConnor {
 
     var vehiculoDeViaje = moto
 
-    const puedeLlamar = false  
+    const puedeLlamar = false 
+    
+    method puedeLlamar() = puedeLlamar 
 
     method vehiculoDeViaje() = vehiculoDeViaje
 
     method vehiculoDeViaje(vehiculo) {
       vehiculoDeViaje = vehiculo
     }
-    method pesoRepartidor() {
-      return pesoPersona + vehiculoDeViaje.pesoVehiculo()
+    method peso() {
+      return pesoPersona + vehiculoDeViaje.peso()
     }
     method pesoPersona() = pesoPersona
 
@@ -53,17 +55,17 @@ object saraConnor {
 }
 //vehiculos
 object moto {
-    const pesoVehiculo = 100
+    const peso = 100
 
-    method pesoVehiculo() = pesoVehiculo
+    method peso() = peso
 }
 
 object camion {
-    const pesoVehiculo = 500
+    const peso = 500
     var cantAcoplados = 0
     const pesoAcoplado = 500 
 
-    method pesoVehiculo() = pesoVehiculo + (pesoAcoplado*cantAcoplados)
+    method peso() = peso + (pesoAcoplado*cantAcoplados)
 
     method cantAcoplados() = cantAcoplados
 
@@ -78,6 +80,9 @@ object paquete {
 
     method estaPago() = estaPago
 
+    method puedeSerEntregado(repartidor,destino) {
+      return estaPago  && destino.condicionesRepartidor(repartidor)
+    }
     method faltaPagar() {
       estaPago = false
     } 
@@ -88,28 +93,13 @@ object paquete {
 //destinos
 object puenteBrooklyn {
     const pesoLimite = 1000
-
-    method cumpleCondiciones(repartidor,paquete) {
-      self.condicionesRepartidor(repartidor) 
-      self.condicionesPaquete(paquete)
-    }
     method condicionesRepartidor(repartidor) {
-      repartidor.pesoRepartidor() <= pesoLimite
-    }
-    method condicionesPaquete(paquete) {
-      paquete.estaPago()  
+      return repartidor.peso() <= pesoLimite
     }
 }
 
 object laMatrix {
-    method cumpleCondiciones(repartidor,paquete) {
-      self.condicionesRepartidor(repartidor)
-      self.condicionesPaquete(paquete)
-    }
     method condicionesRepartidor(repartidor) {
-      repartidor.puedeLlamar()
-    }
-    method condicionesPaquete(paquete) {
-      paquete.estaPago() 
+      return repartidor.puedeLlamar()
     }
 }
