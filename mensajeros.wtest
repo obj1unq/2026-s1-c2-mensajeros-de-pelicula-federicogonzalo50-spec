@@ -6,29 +6,33 @@ describe "casos de prueba de mensajeros de pelicula"{
       assert.equals(false, paquete.estaPago())
       neo.tieneCredito()
       assert.equals(true, neo.puedeLlamar())
-      laMatrix.cumpleCondiciones(neo, paquete)
+      paquete.puedeSerEntregado(neo, laMatrix)
+      assert.notThat(paquete.puedeSerEntregado(neo, laMatrix))
     }
     test "el paquete esta pago y puede ser llevado por jean a la matrix"{
         paquete.paquetePagado()
-        assert.equals(true, paquete.estaPago())
-        laMatrix.cumpleCondiciones(jeanGrey, paquete)
+        assert.that(paquete.estaPago())
+        paquete.puedeSerEntregado(jeanGrey, laMatrix)
+        assert.that(paquete.puedeSerEntregado(jeanGrey,laMatrix))
     }
     test "el paquete pago no puede ser llevado por sara (70kg) a brooklyn al utilizar un camion con 1 acoplado"{
         paquete.paquetePagado()
-        assert.equals(true, paquete.estaPago())
+        assert.that(paquete.estaPago())
         saraConnor.pesoPersona(70)
         assert.equals(70, saraConnor.pesoPersona())
         saraConnor.vehiculoDeViaje(camion)
         assert.equals(camion, saraConnor.vehiculoDeViaje())
         camion.cantAcoplados(1)
         assert.equals(1, camion.cantAcoplados())
-        puenteBrooklyn.cumpleCondiciones(saraConnor, paquete)
+        paquete.puedeSerEntregado(saraConnor, puenteBrooklyn)
+        assert.notThat(paquete.puedeSerEntregado(saraConnor, puenteBrooklyn))
     }
     test "la entrega de previa de sara puede hacerse en moto"{
         paquete.paquetePagado()
         assert.equals(true, paquete.estaPago())
         saraConnor.vehiculoDeViaje(moto)
         assert.equals(moto, saraConnor.vehiculoDeViaje())
-        puenteBrooklyn.cumpleCondiciones(saraConnor, paquete) 
+        paquete.puedeSerEntregado(saraConnor, puenteBrooklyn)
+        assert.that(paquete.puedeSerEntregado(saraConnor,puenteBrooklyn)) 
     }
 }
