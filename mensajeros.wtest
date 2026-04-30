@@ -1,0 +1,34 @@
+import mensajeros.*
+
+describe "casos de prueba de mensajeros de pelicula"{
+    test "el paquete no esta pago y no puede ser llevado por neo a la matrix"{
+      paquete.faltaPagar()
+      assert.equals(false, paquete.estaPago())
+      neo.tieneCredito()
+      assert.equals(true, neo.puedeLlamar())
+      laMatrix.cumpleCondiciones(neo, paquete)
+    }
+    test "el paquete esta pago y puede ser llevado por jean a la matrix"{
+        paquete.paquetePagado()
+        assert.equals(true, paquete.estaPago())
+        laMatrix.cumpleCondiciones(jeanGrey, paquete)
+    }
+    test "el paquete pago no puede ser llevado por sara (70kg) a brooklyn al utilizar un camion con 1 acoplado"{
+        paquete.paquetePagado()
+        assert.equals(true, paquete.estaPago())
+        saraConnor.pesoPersona(70)
+        assert.equals(70, saraConnor.pesoPersona())
+        saraConnor.vehiculoDeViaje(camion)
+        assert.equals(camion, saraConnor.vehiculoDeViaje())
+        camion.cantAcoplados(1)
+        assert.equals(1, camion.cantAcoplados())
+        puenteBrooklyn.cumpleCondiciones(saraConnor, paquete)
+    }
+    test "la entrega de previa de sara puede hacerse en moto"{
+        paquete.paquetePagado()
+        assert.equals(true, paquete.estaPago())
+        saraConnor.vehiculoDeViaje(moto)
+        assert.equals(moto, saraConnor.vehiculoDeViaje())
+        puenteBrooklyn.cumpleCondiciones(saraConnor, paquete) 
+    }
+}
